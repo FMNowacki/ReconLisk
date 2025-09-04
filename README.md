@@ -20,8 +20,8 @@ ______                     _     _     _
 </pre>
 </div>
 
-A lightweight, asyncio-based port scanner inspired by tools like Nmap.
-This project is built for learning and showcasing practical skills in network security and Python concurrency.
+A lightweight, asyncio-based port scanner inspired by tools like Nmap.  
+This project is built for learning and showcasing practical skills in network security and Python concurrency.  
 
 ## Features
 
@@ -52,12 +52,12 @@ This project is built entirely in python 3.10+
 
 ### Libraries
 
-asyncio - for asynchrenous I/O, enabling thousands of concurrent port probes without blocking (https://docs.python.org/3/library/asyncio.html)
-socket - for hostname resolution and low-level networking (https://docs.python.org/3/library/socket.html)
-dataclasses - to define simple and structured containers for scan resulst (https://docs.python.org/3/library/dataclasses.html)
-context.suppress - to ignore expected exceptions (https://docs.python.org/3/library/contextlib.html#contextlib.suppress)
-typing - for type hints (https://docs.python.org/3/library/typing.html)
+asyncio - for asynchrenous I/O, enabling thousands of concurrent port probes without blocking (https://docs.python.org/3/library/asyncio.html)  
+socket - for hostname resolution and low-level networking (https://docs.python.org/3/library/socket.html)  
+dataclasses - to define simple and structured containers for scan resulst (https://docs.python.org/3/library/dataclasses.html)  
+context.suppress - to ignore expected exceptions (https://docs.python.org/3/library/contextlib.html#contextlib.suppress)  
+typing - for type hints (https://docs.python.org/3/library/typing.html)  
 
 ### Inspiration
 
-This tool is inspired from Nmap (https://nmap.org/), an industry standard port scanner 
+This tool is inspired from Nmap (https://nmap.org/), an industry standard port scanner.   
