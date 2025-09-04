@@ -1,14 +1,16 @@
 # Overview
-"""
+<div align="center">
+
+<pre>
                   ,==.
                   )   `==.
-		         )       `=.
+                 )       `=.
                 )          }.
                )       ,===   
  ___(__)      )    ,===    
- \` _ *\     ),===    	   /\
+ \` _ *\     ),===         /\
   VV \ \    ,----,      / /
-      \ \__/  ,-, \,__,/ /	
+      \ \__/  ,-, \,__,/ / 
        `,___,/   \,____,/
 ______                     _     _     _    
 | ___ \                   | |   (_)   | |   
@@ -16,8 +18,10 @@ ______                     _     _     _
 |    // _ \/ __/ _ \| '_ \| |   | / __| |/ /
 | |\ \  __/ (_| (_) | | | | |___| \__ \   < 
 \_| \_\___|\___\___/|_| |_\_____/_|___/_|\_\
-"""
-    
+</pre>
+
+</div>
+
 A lightweight, asyncio-based port scanner inspired by tools like Nmap.
 This project is built for learning and showcasing practical skills in network security and Python concurrency.
 
