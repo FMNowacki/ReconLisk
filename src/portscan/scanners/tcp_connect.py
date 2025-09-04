@@ -21,3 +21,27 @@ class TCPConnectScanner:
         self.banner_timout = banner_timeout
         self.banner_bytes = banner_bytes
 
+    async def probe(self, host: str, port: int) -> ProbeResult:
+        try: 
+            #Open Connection
+            reader, writer = await asyncio.wait_for(asyncio.open_connection(host, port, timeout = self.timeout))
+
+            #Attempt to grab banner
+            banner = None
+
+            with suppress(asyncio.TimeoutError):
+                data = await asyncio.wait_for(reader.read(self.banner_bytes), timeout=self.banner_timout)
+
+                if data: 
+                    banner = data.decode(errors="ignore").strip()
+
+            #Close and Clean up Connection
+            writer.close()
+            with suppress(Exception):
+                await writer.wait_closed()
+
+            return ProbeResult(host, port, "tcp", "open", banner=banner, reason="connect-ok")
+        
+        except Exception as e:
+            return ProbeResult(host, port, "tcp", "closed", reason=type(e).__name__)
+
