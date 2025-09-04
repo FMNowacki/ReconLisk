@@ -1,6 +1,5 @@
 # Overview
 <div align="center">
-
 <pre>
                   ,==.
                   )   `==.
@@ -19,7 +18,6 @@ ______                     _     _     _
 | |\ \  __/ (_| (_) | | | | |___| \__ \   < 
 \_| \_\___|\___\___/|_| |_\_____/_|___/_|\_\
 </pre>
-
 </div>
 
 A lightweight, asyncio-based port scanner inspired by tools like Nmap.
