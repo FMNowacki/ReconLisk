@@ -1,6 +1,8 @@
+import json
 from typing import List
 from ..scanners.tcp_connect import ProbeResult
 
+#Simple function to translate result to text
 def to_text(target: str, ip: str, results: List[ProbeResult], elapsed: float) -> str:
     lines = [f"Scan Report for {target} ({ip})"]
     for r in sorted(results, key=lambda x: x.port):
@@ -14,3 +16,12 @@ def to_text(target: str, ip: str, results: List[ProbeResult], elapsed: float) ->
     lines.append(f"\n{open_count} open ports found in {elapsed:.2f}s")
     return "\n".join(lines)
 
+#Simple function to translate reult to a json file
+def to_json(target: str, ip: str, results: List[ProbeResult], elapsed: float) -> str:
+    payload = {
+        "target": target,
+        "ip": ip,
+        "elapsed_seconds": round(elapsed, 3),
+        "results": [r.__dict__ for r in results],
+    }
+    return json.dumps(payload, indent=2)
