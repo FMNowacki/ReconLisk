@@ -32,4 +32,4 @@ def parse_port_spec(spec: str) -> list [int]:
 
 #Function to resolve a hostname to IPv4 address
 def resolve_host(host: str) -> str:
-    return socket.gethostname(host)
+    return socket.gethostbyname(host)
