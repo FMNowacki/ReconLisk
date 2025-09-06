@@ -24,7 +24,7 @@ class TCPConnectScanner:
     async def probe(self, host: str, port: int) -> ProbeResult:
         try: 
             #Open Connection
-            reader, writer = await asyncio.wait_for(asyncio.open_connection(host, port, timeout = self.timeout))
+            reader, writer = await asyncio.wait_for(asyncio.open_connection(host, port), timeout = self.timeout)
 
             #Attempt to grab banner
             banner = None
