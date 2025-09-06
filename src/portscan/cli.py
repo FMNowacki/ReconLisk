@@ -4,8 +4,11 @@ from portscan.utils import parse_port_spec, resolve_host
 from portscan.engine import run_scan
 from portscan.output import formatters
 
+#Main Method 
 def main() -> None:
     ap = argparse.ArgumentParser(prog="portscan", description="A lightweight asyncio-based TCP port scanner.")
+
+    #All Command arguments
     ap.add_argument("host", help="Hostname or IPv4 address to scan")
     ap.add_argument("-p", "--ports", default="1-1024", help="Port spec, e.g '1-1024, 80, 443' (default: 1-1024)")
     ap.add_argument("-to", "--timeout", type=float, default=0.8, help="Per-port connect timeout")
@@ -20,6 +23,7 @@ def main() -> None:
 
     results, elapsed = asyncio.run(run_scan(ip, ports, timeout=args.timeout, concurrency=args.concurrency))
 
+    #Output check
     if args.json: 
         print(formatters.to_json(target, ip, results, elapsed))
     else: 
