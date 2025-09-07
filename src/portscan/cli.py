@@ -1,6 +1,6 @@
 import argparse
 import asyncio
-from portscan.utils import parse_port_spec, resolve_host
+from portscan.utils import parse_port_spec, resolve_host, top_ports
 from portscan.engine import run_scan
 from portscan.output import formatters
 
@@ -14,12 +14,16 @@ def main() -> None:
     ap.add_argument("-to", "--timeout", type=float, default=0.8, help="Per-port connect timeout")
     ap.add_argument("-cc", "--concurrency", type=int, default=500, help="Max concurrent probes")
     ap.add_argument("--json", action="store_true", help="Output JSON instead of text")
+    ap.add_argument("--top", type=int, help="Scans some of the most common TCP ports (overrides --ports)")
 
     args = ap.parse_args()
 
     target = args.host
     ip = resolve_host(target)
-    ports = parse_port_spec(args.ports)
+    if args.top: 
+        ports = top_ports(args.top)
+    else: 
+        ports = parse_port_spec(args.ports)
 
     results, elapsed = asyncio.run(run_scan(ip, ports, timeout=args.timeout, concurrency=args.concurrency))
 

@@ -1,5 +1,15 @@
 import socket 
 
+COMMON_TCP = [
+    80, 443, 22, 21, 25, 110, 143, 53, 3306, 3389, 5900, 8080,
+    6379, 5432, 9200, 27017, 25, 587, 993, 995, 389, 636, 135,
+    139, 445, 902, 912, 2049, 1723, 1521, 5000, 8000, 8443
+]
+
+def top_ports(n: int) -> list[int]:
+    n = max(1, min(n, len(COMMON_TCP)))
+    return COMMON_TCP[:n]
+
 #Function for parsing strings into sorted list of ports  
 def parse_port_spec(spec: str) -> list [int]:
     
