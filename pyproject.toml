@@ -11,7 +11,7 @@ requires-python = ">=3.10"
 license = { text = "MIT" }
 
 [project.scripts]
-portscan = "portscan.cli:main"
+reconlisk = "portscan.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
