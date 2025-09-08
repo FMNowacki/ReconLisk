@@ -16,6 +16,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(prog="portscan", description="A lightweight asyncio-based TCP port scanner.")
 
     #All Command arguments
+    ap.add_argument("--version", action="version", version=f"ReconLisk {__version__}")
     ap.add_argument("host", help="Hostname or IPv4 address to scan")
     ap.add_argument("-p", "--ports", default="1-1024", help="Port specification, e.g '1-1024, 80, 443' (default: 1-1024).")
     ap.add_argument("--top", type=int, help="Scans some of the most common TCP ports (overrides --ports)")
@@ -64,6 +65,7 @@ def main() -> None:
     #Output check
     if args.json: 
         print(formatters.to_json(target, ip, results, elapsed))
+        print(f"Scan finished at {end_time:%Y-%m-%d %H:%M:%S}.")
     else: 
         print(formatters.to_text(target, ip, results, elapsed))
         end_time = datetime.now()

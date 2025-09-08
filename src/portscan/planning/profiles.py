@@ -8,7 +8,7 @@ class ScanProfile:
 
 PROFILES = {
     "paranoid": ScanProfile(timeout=2.0, concurrency=200, batch=800), 
-    "normal": ScanProfile(timeout=1.0, concurrency=500, batch=1500),
+    "normal": ScanProfile(timeout=0.8, concurrency=500, batch=1500),
     "aggressive": ScanProfile(timeout=0.5, concurrency=1200, batch=3000)
 }
 
