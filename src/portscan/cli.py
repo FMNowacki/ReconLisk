@@ -3,6 +3,7 @@ import asyncio
 import sys
 import time
 
+from datetime import datetime
 from portscan.utils import parse_port_spec, resolve_host, top_ports
 from portscan.planning.profiles import resolve_profile, ScanProfile
 from portscan.engine import run_scan
@@ -27,10 +28,11 @@ def main() -> None:
     args = ap.parse_args()
 
     #Banner art and text
+    start_time = datetime.now()
     print(ASCII_ART)
     print(f"ReconLisk v{__version__} - asyncio based scanner \n")
     print(f"Disclaimer: {DISCLAIMER}")
-    print(f"Starting Scan on {args.host}...")
+    print(f"Starting Scan on {args.host} at {start_time:%Y-%m-%d %H:%M:%S}...")
 
     #resolve target and ports
     target = args.host
@@ -63,6 +65,9 @@ def main() -> None:
         print(formatters.to_json(target, ip, results, elapsed))
     else: 
         print(formatters.to_text(target, ip, results, elapsed))
+        end_time = datetime.now()
+        print(f"Scan finished at {end_time:%Y-%m-%d %H:%M:%S}.")
+
 
 if __name__ == "__main__":
     main()
