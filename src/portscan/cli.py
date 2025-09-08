@@ -1,11 +1,14 @@
 import argparse
 import asyncio
 import sys
+import time
 
 from portscan.utils import parse_port_spec, resolve_host, top_ports
 from portscan.planning.profiles import resolve_profile, ScanProfile
 from portscan.engine import run_scan
 from portscan.output import formatters
+from portscan.banner import ASCII_ART, DISCLAIMER
+from portscan import __version__
 
 #Main Method 
 def main() -> None:
@@ -23,6 +26,13 @@ def main() -> None:
     
     args = ap.parse_args()
 
+    #Banner art and text
+    print(ASCII_ART)
+    print(f"ReconLisk v{__version__} - asyncio based scanner \n")
+    print(f"Disclaimer: {DISCLAIMER}")
+    print(f"Starting Scan on {args.host}...")
+
+    #resolve target and ports
     target = args.host
     ip = resolve_host(target)
     ports = top_ports(args.top) if args.top else parse_port_spec(args.ports)
@@ -30,7 +40,14 @@ def main() -> None:
     if not ports:
         print("No valid ports specified.")
         sys.exit(2)
+
+    #set profile
+    chosen = resolve_profile( args.profile, ScanProfile(timeout=args.timeout, concurrency=args.concurrency, batch=args.batch))
+    timeout = chosen.timeout
+    concurrency = chosen.concurrency
+    batch = chosen.batch
     
+    #tuning flags override any profile
     if args.timeout != ap.get_default("timeout"):
         timeout = args.timeout
     if args.concurrency != ap.get_default("concurrency"):
@@ -38,6 +55,7 @@ def main() -> None:
     if args.batch != ap.get_default("batch"):
         batch = args.batch
 
+    #run scan with resolved settings
     results, elapsed = asyncio.run(run_scan(ip, ports, timeout=args.timeout, concurrency=args.concurrency))
 
     #Output check
