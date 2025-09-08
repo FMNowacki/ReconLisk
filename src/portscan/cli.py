@@ -17,13 +17,13 @@ def main() -> None:
 
     #All Command arguments
     ap.add_argument("host", help="Hostname or IPv4 address to scan")
-    ap.add_argument("-p", "--ports", default="1-1024", help="Port spec, e.g '1-1024, 80, 443' (default: 1-1024)")
+    ap.add_argument("-p", "--ports", default="1-1024", help="Port specification, e.g '1-1024, 80, 443' (default: 1-1024).")
     ap.add_argument("--top", type=int, help="Scans some of the most common TCP ports (overrides --ports)")
-    ap.add_argument("-to", "--timeout", type=float, default=0.8, help="Per-port connect timeout")
-    ap.add_argument("-cc", "--concurrency", type=int, default=500, help="Max concurrent probes")
-    ap.add_argument("--profile", choices=["paranoid", "normal", "aggressive"], help="Predefined aggression profiles")
-    ap.add_argument("-b", "--batch", type=int, default=2000, help="Ports scheduled per batch (default: 2000)")
-    ap.add_argument("--json", action="store_true", help="Output JSON instead of text")
+    ap.add_argument("-to", "--timeout", type=float, default=0.8, help="The maximum timeout for every port.")
+    ap.add_argument("-cc", "--concurrency", type=int, default=500, help="The maximum number of concurrent probes.")
+    ap.add_argument("--profile", choices=["paranoid", "normal", "aggressive"], help="Predefined aggression profiles.")
+    ap.add_argument("-b", "--batch", type=int, default=2000, help="Number of ports scheduled per batch (default: 2000).")
+    ap.add_argument("--json", action="store_true", help="Output JSON instead of text.")
     
     args = ap.parse_args()
 
@@ -31,6 +31,7 @@ def main() -> None:
     start_time = datetime.now()
     print(ASCII_ART)
     print(f"ReconLisk v{__version__} - asyncio based scanner \n")
+    print("Copyright (c) 2025 FNowacki")
     print(f"Disclaimer: {DISCLAIMER}")
     print(f"Starting Scan on {args.host} at {start_time:%Y-%m-%d %H:%M:%S}...")
 
