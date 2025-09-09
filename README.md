@@ -20,6 +20,7 @@ ______                     _     _     _
 </pre>
 </div>
 Version 0.2.5  
+Copyright (c) 2025 FNowacki    
 A lightweight, **asyncio-based** port scanner inspired by tools like Nmap.  
 Built for learning and for showcasing practical skills in **network security** and **Python concurrency**.  
 
