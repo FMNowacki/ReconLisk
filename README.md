@@ -19,8 +19,8 @@ ______                     _     _     _
 \_| \_\___|\___\___/|_| |_\_____/_|___/_|\_\
 </pre>
 </div>
-Version 0.2.5  
-Copyright (c) 2025 FNowacki    
+Version 0.2.5<br>
+Copyright (c) 2025 FNowacki<br>
 A lightweight, **asyncio-based** port scanner inspired by tools like Nmap.  
 Built for learning and for showcasing practical skills in **network security** and **Python concurrency**.  
 
