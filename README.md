@@ -89,7 +89,7 @@ This project is built entirely in python 3.10+
 - [`time`](https://docs.python.org/3/library/time.html)  
   For measuring elapsed time during scans.
 
-- [`datetime`](https://docs.python.org/3/library/datetime.html) 
+- [`datetime`](https://docs.python.org/3/library/datetime.html)  
   For human-readable scan start/end timestamps.
 
 - [`json`](https://docs.python.org/3/library/json.html)  
