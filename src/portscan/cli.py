@@ -60,7 +60,7 @@ def main() -> None:
         batch = args.batch
 
     #run scan with resolved settings
-    results, elapsed = asyncio.run(run_scan(ip, ports, timeout=args.timeout, concurrency=args.concurrency))
+    results, elapsed = asyncio.run(run_scan(ip, ports, timeout=timeout, concurrency=concurrency, batch_size=batch, retries=getattr(chosen, "retries", 0), retry_delay=getattr(chosen, "retry_delay", 0.2)))
 
     #Output check
     if args.json: 

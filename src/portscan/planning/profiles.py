@@ -5,12 +5,14 @@ class ScanProfile:
     timeout: float
     concurrency: int
     batch: int
+    retries: int = 0
+    retry_delay: float = 0.2
 
 #Profile settings 
 PROFILES = {
-    "paranoid": ScanProfile(timeout=2.0, concurrency=100, batch=300), 
-    "normal": ScanProfile(timeout=0.8, concurrency=500, batch=1500),
-    "aggressive": ScanProfile(timeout=0.5, concurrency=1500, batch=3000)
+    "paranoid": ScanProfile(timeout=2.5, concurrency=100, batch=200, retries=1, retry_delay=0.3), 
+    "normal": ScanProfile(timeout=1.5, concurrency=250, batch=500, retries=1, retry_delay=0.2),
+    "aggressive": ScanProfile(timeout=1, concurrency=300, batch=700, retries=1, retry_delay=0.1)
 }
 
 def resolve_profile(name: str | None, fallback: ScanProfile) -> ScanProfile:

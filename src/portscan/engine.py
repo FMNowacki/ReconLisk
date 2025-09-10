@@ -13,30 +13,31 @@ def _chunks(seq, n):
         yield seq[i:i+n]
 
 #Redefined run_scan -> runs in batches now, more stable
-async def run_scan(host: str, ports: Iterable[int], timeout: float, concurrency: int, batch_size: int = 2000) -> Tuple[List[ProbeResult]]:
-    scanner = TCPConnectScanner(timeout=timeout)
-    sem = asyncio.Semaphore(max(1, concurrency))
+async def run_scan(host: str, ports: Iterable[int], timeout: float, concurrency: int, batch_size: int = 2000, retries: int = 0, retry_delay: float = 0.2) -> Tuple[List[ProbeResult], float]:
+    scanner = TCPConnectScanner(timeout=timeout, retries=retries, retry_delay=retry_delay)
+    
     port_list = list(ports)
+    eff_concurrency = max(1, min(concurrency, batch_size))
+    sem = asyncio.Semaphore(eff_concurrency)
 
     results: List[ProbeResult] = []
     t0 = time.perf_counter()
 
-    try: 
+    try:
         for batch in _chunks(port_list, batch_size):
             tasks = [_bounded_probe(scanner, host, p, sem) for p in batch]
             batch_results = await asyncio.gather(*tasks, return_exceptions=True)
-            for r in batch_results:
-                if isinstance(r, Exception):
-                    results.append(ProbeResult(host, -1, "tcp", "closed", reason=type(r).__name__))
-                else:
-                    results.append(r)
 
+            # Keep only successful ProbeResult objects; skip exceptions (or log if you add --debug)
+            for r in batch_results:
+                if isinstance(r, ProbeResult):
+                    results.append(r)
+                # else: it's an Exception; skip or handle as you like
     except asyncio.CancelledError:
         raise
-    except Exception:
-        pass
+    finally:
+        elapsed = time.perf_counter() - t0
 
-    elapsed = time.perf_counter() - t0
-    return results, elapsed 
+    return results, elapsed
     
 
