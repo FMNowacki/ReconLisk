@@ -1,9 +1,13 @@
 import asyncio
 import time
-from typing import Iterable, List, Tuple 
+from typing import Iterable, List, Tuple, Protocol, Awaitable
 from .scanners.tcp_connect import TCPConnectScanner, ProbeResult
 
-async def _bounded_probe(scanner: TCPConnectScanner, host: str, port: int, sem: asyncio.Semaphore):
+
+class Scanner(Protocol):
+    async def probe(self, host: str, port: int) -> Awaitable[ProbeResult]: ...
+
+async def _bounded_probe(scanner: Scanner, host: str, port: int, sem: asyncio.Semaphore):
     async with sem:
         return await scanner.probe(host, port)
 
@@ -12,14 +16,10 @@ def _chunks(seq, n):
     for i in range(0, len(seq), n):
         yield seq[i:i+n]
 
-#Redefined run_scan -> runs in batches now, more stable
-async def run_scan(host: str, ports: Iterable[int], timeout: float, concurrency: int, batch_size: int = 2000, retries: int = 0, retry_delay: float = 0.2) -> Tuple[List[ProbeResult], float]:
-    scanner = TCPConnectScanner(timeout=timeout, retries=retries, retry_delay=retry_delay)
-    
-    port_list = list(ports)
+async def run_scan_with(scanner: Scanner, host: str, ports: Iterable[int], concurrency: int, batch_size: int = 2000) -> Tuple[List[ProbeResult], float]:
     eff_concurrency = max(1, min(concurrency, batch_size))
     sem = asyncio.Semaphore(eff_concurrency)
-
+    port_list = list(ports)
     results: List[ProbeResult] = []
     t0 = time.perf_counter()
 
@@ -39,5 +39,12 @@ async def run_scan(host: str, ports: Iterable[int], timeout: float, concurrency:
         elapsed = time.perf_counter() - t0
 
     return results, elapsed
+    
+
+
+#Redefined run_scan -> runs in batches now, more stable
+async def run_scan(host: str, ports: Iterable[int], timeout: float, concurrency: int, batch_size: int = 2000, retries: int = 0, retry_delay: float = 0.2) -> Tuple[List[ProbeResult], float]:
+    scanner = TCPConnectScanner(timeout=timeout, retries=retries, retry_delay=retry_delay)
+    return await run_scan_with(scanner, host, ports, concurrency=concurrency, batch_size=batch_size)
     
 

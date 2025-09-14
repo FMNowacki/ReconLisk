@@ -1,7 +1,6 @@
 import argparse
 import asyncio
 import sys
-import time
 
 from datetime import datetime
 from portscan.utils import parse_port_spec, resolve_host, top_ports
