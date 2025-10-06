@@ -25,7 +25,7 @@ class TCPConnectScanner:
 
     async def probe(self, host: str, port: int) -> ProbeResult:
         attempts = self.retries + 1
-        last_exec: Optional[BaseException] = None
+        last_exc: Optional[BaseException] = None
 
         for i in range(attempts):
             try: 

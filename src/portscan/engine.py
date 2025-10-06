@@ -1,11 +1,11 @@
 import asyncio
 import time
-from typing import Iterable, List, Tuple, Protocol, Awaitable
+from typing import Iterable, List, Tuple, Protocol
 from .scanners.tcp_connect import TCPConnectScanner, ProbeResult
 
 
 class Scanner(Protocol):
-    async def probe(self, host: str, port: int) -> Awaitable[ProbeResult]: ...
+    async def probe(self, host: str, port: int) -> ProbeResult: ...
 
 async def _bounded_probe(scanner: Scanner, host: str, port: int, sem: asyncio.Semaphore):
     async with sem:

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "reconlisk"
-version = "0.2.2"
-description = "A lightweight asyncio-based TCP port scanner"
+version = "0.7.3"
+description = "A lightweight port scanner"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
