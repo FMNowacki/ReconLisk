@@ -34,7 +34,7 @@ ______                     _     _     _
 |    // _ \/ __/ _ \| '_ \| |   | / __| |/ /
 | |\ \  __/ (_| (_) | | | | |___| \__ \   <
 \_| \_\___|\___\___/|_| |_\_____/_|___/_|\_\
-```markdown
+```
 Version 0.7.3<br>
 Copyright (c) 2025 FMNowacki<br>
 A lightweight python port scanner inspired by tools like Nmap.
