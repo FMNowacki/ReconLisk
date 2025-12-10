@@ -2,6 +2,7 @@ import asyncio
 from contextlib import suppress
 from dataclasses import dataclass
 from typing import Optional
+from portscan.services.probes import (probe_http, probe_https, probe_ssh, probe_smtp, probe_ftp)
 
 #Data Container with all the info about a single port probe
 @dataclass
@@ -12,6 +13,7 @@ class ProbeResult:
     state: str
     banner: Optional[str] = None 
     reason: Optional[str] = None
+    service: Optional[str] = None
 
 #Scanner Object 
 class TCPConnectScanner: 
@@ -41,12 +43,35 @@ class TCPConnectScanner:
                     if data: 
                         banner = data.decode(errors="ignore").strip()
 
+                
+                #Service Identification Probes
+                service = None
+                extra_banner = None
+                try:
+                    probe_timeout = self.timeout
+
+                    if port in (80, 8080, 8000, 8081):
+                        service, extra_banner = await probe_http(host, port, timeout=probe_timeout)
+                    elif port in (443, 8443, 9443):
+                        service, extra_banner = await probe_https(host, port, timeout=probe_timeout)
+                    elif port == 22:
+                        service, extra_banner = await probe_ssh(host, port, timeout=probe_timeout)
+                    elif port == 25:
+                        service, extra_banner = await probe_smtp(host, port, timeout=probe_timeout)
+                    elif port == 21:
+                        service, extra_banner = await probe_ftp(host, port, timeout=probe_timeout)
+                except Exception:
+                    #best effort only
+                    pass
+
+                final_banner = extra_banner or banner
+
                 #Close and Clean up Connection
                 writer.close()
                 with suppress(Exception):
                     await writer.wait_closed()
 
-                return ProbeResult(host, port, "tcp", "open", banner=banner, reason="connect-ok")
+                return ProbeResult(host, port, "tcp", "open", banner=final_banner, reason="connect-ok", service=service)
             
             except Exception as e:
                 last_exc = e

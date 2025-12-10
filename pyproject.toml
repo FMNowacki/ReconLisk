@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "reconlisk"
+name = "portscan"
 version = "0.7.5"
 description = "A lightweight port scanner"
 readme = "README.md"

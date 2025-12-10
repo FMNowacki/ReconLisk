@@ -9,7 +9,7 @@ def top_ports(n: int) -> list[int]:
     return COMMON_TCP_1000[:n]
 
 #Function for parsing strings into sorted list of ports  
-def parse_port_spec(spec: str) -> list [int]:
+def parse_port_spec(spec: str) -> list[int]:
     
     if not spec:
         return []

@@ -8,6 +8,8 @@ def to_text(target: str, ip: str, results: List[ProbeResult], elapsed: float) ->
     for r in sorted(results, key=lambda x: x.port):
         if r.state == "open":
             line = f"{r.port}/{r.proto} open"
+            if getattr(r, "service", None):
+                line += f"  service: {r.service}"
             if r.banner:
                 line += f"  banner: {r.banner[:80]}"
             lines.append(line)
