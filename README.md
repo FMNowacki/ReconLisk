@@ -35,7 +35,7 @@ ______                     _     _     _
 | |\ \  __/ (_| (_) | | | | |___| \__ \   <
 \_| \_\___|\___\___/|_| |_\_____/_|___/_|\_\
 ```
-Version 0.7.3<br>
+Version 0.7.4<br>
 Copyright (c) 2025 FMNowacki<br>
 A lightweight python port scanner inspired by tools like Nmap.
 Built for learning and for showcasing practical skills in **network security** and **Python**.
@@ -74,4 +74,4 @@ This project is built entirely in python 3.10+
 
 ### Inspiration
 
-This tool is inspired from Nmap (https://nmap.org/), an industry standard port scanner.
+This tool is inspired from Nmap (https://nmap.org/).
