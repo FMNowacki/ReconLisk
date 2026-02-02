@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "portscan"
-version = "0.7.6"
+version = "0.8.0"
 description = "A lightweight port scanner"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
+license = { text = "BSD-3-Clause" }
 
 [project.scripts]
 reconlisk = "portscan.cli:main"
